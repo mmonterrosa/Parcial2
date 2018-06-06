@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Razas;
+package EntrenamientoMilitia;
 
 /**
  *
  * @author MMont
  */
-public interface Razas {
-    void crearEdifRecursos();
-    void crearEdifVehiculos();
-    void crearEdifMilitia();
+public interface Entrenamiento {
+    public void Entrenar();
     
     
 }

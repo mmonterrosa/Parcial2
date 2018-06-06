@@ -9,6 +9,21 @@ package Razas;
  *
  * @author MMont
  */
-public class Gigantes {
+public class Gigantes implements Razas{
+
+    @Override
+    public void crearEdifRecursos() {
+    
+    }
+
+    @Override
+    public void crearEdifVehiculos() {
+    
+    }
+
+    @Override
+    public void crearEdifMilitia() {
+    
+    }
     
 }

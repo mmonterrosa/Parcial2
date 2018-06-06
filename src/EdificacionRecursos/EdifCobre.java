@@ -3,29 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Razas;
+package EdificacionRecursos;
 
 /**
  *
  * @author MMont
  */
-public class Elfos implements Razas{
+public class EdifCobre implements EdifRecursos{
 
     @Override
-    public void crearEdifRecursos() {
-        
-    
+    public void recolectar() {
     }
-
-    @Override
-    public void crearEdifVehiculos() {
-    
-    }
-
-    @Override
-    public void crearEdifMilitia() {
-    
-    }
-    
     
 }

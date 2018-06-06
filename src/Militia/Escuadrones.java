@@ -3,26 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Razas;
+package Militia;
 
 /**
  *
  * @author MMont
  */
-public class Golems implements Razas{
+public class Escuadrones implements Militia{
+    private int tiempoEspera = 1;
+    private int vida= 500;
 
     @Override
-    public void crearEdifRecursos() {
+    public void Atacar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void crearEdifVehiculos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void crearEdifMilitia() {
+    public void Defender() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
