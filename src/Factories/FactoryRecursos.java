@@ -13,6 +13,7 @@ import Militia.Militia;
 import Razas.Razas;
 import EdificacionRecursos.EdifOro;
 import EdificacionRecursos.EdifPlata;
+import Vehiculos.EdifVehiculos;
 
 /**
  *
@@ -52,7 +53,12 @@ public class FactoryRecursos implements AbstractFactory{
 
     @Override
     public Administrador getAdministrador(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     return null;
+    }
+
+    @Override
+    public EdifVehiculos getVehiculo(int type, int espera) {
+    return null;
     }
     
     

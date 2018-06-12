@@ -39,7 +39,7 @@ public class EdifOro implements EdifRecursos{
     
     @Override
     public String toString() {
-        return "Tipo de Edificacion: "+ nombre + " Vida: " + vida;
+        return "\nTipo de Edificacion: "+ nombre + "\nVida: " + vida;
    
     }
 

@@ -10,5 +10,7 @@ package Vehiculos;
  * @author MMont
  */
 public interface EdifVehiculos {
+
+    int getFaseImplementacion();
     
 }

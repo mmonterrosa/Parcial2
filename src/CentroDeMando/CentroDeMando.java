@@ -9,6 +9,7 @@ import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
 import Factories.AbstractFactory;
 import Factories.FactoryProducer;
+import Vehiculos.EdifVehiculos;
 import java.util.ArrayList;
 import parcial2.Jugador;
 import parcial2.Menu;
@@ -27,18 +28,21 @@ public class CentroDeMando {
     private int plataMax=5000;
     private int cobreMax=3000;
     
-    private int cantOroActual=50;
-    private int cantPlataActual=100;
-    private int cantCobreActual=200;
+    private int cantOroActual=50000;
+    private int cantPlataActual=100000;
+    private int cantCobreActual=200000;
     
     public Administrador AdminRecursos;
+    public Administrador AdminVehiculos;
     
     public ArrayList<EdifRecursos> pendingEdifRecursos = new ArrayList<>();
+    public ArrayList<EdifVehiculos> pendingEdifVehiculos = new ArrayList<>();
     
     
     public CentroDeMando(){
         AbstractFactory factory = FactoryProducer.getFactory("Administrador");
         this.AdminRecursos=factory.getAdministrador("Recursos");
+        this.AdminVehiculos=factory.getAdministrador("Vehiculos");
         
         
     }
@@ -49,6 +53,21 @@ public class CentroDeMando {
                 try{
                 AdminRecursos.add(pendingEdifRecursos.get(i));
                 pendingEdifRecursos.remove(pendingEdifRecursos.get(i));
+                i-=1;
+                }
+                catch (Exception e){
+                    System.err.println("No se pudo Agregar!");
+                }
+            }
+        }
+        
+        
+        for (int i =0;i<pendingEdifVehiculos.size();i++){
+            if (pendingEdifVehiculos.get(i).getFaseImplementacion() == Menu.fase){
+                try{
+                AdminVehiculos.add(pendingEdifVehiculos.get(i));
+                pendingEdifVehiculos.remove(pendingEdifVehiculos.get(i));
+                i-=1;
                 }
                 catch (Exception e){
                     System.err.println("No se pudo Agregar!");
@@ -58,14 +77,7 @@ public class CentroDeMando {
       
     }
 
-    /*
-     public void addPendingEdif(){
-        for (int i =0;i<pendingEdifRecursos.size();i++){
-            System.out.println("Fase De Implementacion: " + pendingEdifRecursos.get(i).getFaseImplementacion());
-             
-    }
-     }
-*/
+
     public void Recolectar( ){
         ArrayList<EdifRecursos> aux = new ArrayList();
         try{
@@ -150,5 +162,15 @@ public class CentroDeMando {
     public void setCantCobreActual(int cantCobreActual) {
         this.cantCobreActual = cantCobreActual;
     }
+
+    public ArrayList<EdifRecursos> getPendingEdifRecursos() {
+        return pendingEdifRecursos;
+    }
+
+    public ArrayList<EdifVehiculos> getPendingEdifVehiculos() {
+        return pendingEdifVehiculos;
+    }
+    
+    
  
 }

@@ -6,11 +6,13 @@
 package Factories;
 
 import Administrador.AdminEdificioRecursos;
+import Administrador.AdminEdificioVehiculos;
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
 import EntrenamientoMilitia.Entrenamiento;
 import Militia.Militia;
 import Razas.Razas;
+import Vehiculos.EdifVehiculos;
 
 /**
  *
@@ -44,10 +46,17 @@ public class FactoryAdministrador implements AbstractFactory {
     switch(type){
         case "Recursos":
             return new AdminEdificioRecursos();
+        case "Vehiculos":
+            return new AdminEdificioVehiculos();
             
         
         }
     return null;
+    }
+
+    @Override
+    public EdifVehiculos getVehiculo(int type, int espera) {
+      return null;
     }
     
 }

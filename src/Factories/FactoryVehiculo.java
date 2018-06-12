@@ -9,57 +9,53 @@ import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
 import EntrenamientoMilitia.Entrenamiento;
 import Militia.Militia;
-import Razas.Elfos;
-import Razas.Gigantes;
-import Razas.Golems;
 import Razas.Razas;
+import Vehiculos.EdifConvoy;
+import Vehiculos.EdifHummer;
 import Vehiculos.EdifVehiculos;
 
 /**
  *
  * @author MMont
  */
-public class FactoryRazas implements AbstractFactory{
+public class FactoryVehiculo implements AbstractFactory{
 
     @Override
     public Razas getRazas(String type) {
-        switch (type){
-            case "Elfos":
-                return new Elfos();
-            case "Gigantes":
-                return new Gigantes();
-            case "Golems":
-                return new Golems();
-                    
-                    
-        }
         return null;
-    }
+  }
 
     @Override
     public Militia getMilitia(String type) {
-    return null;
-    }
+        return null;
+  }
 
     @Override
     public EdifRecursos getEdifRecursos(int type, int espera) {
-    return null;
+  return null;
     }
 
     @Override
     public Entrenamiento getEntrenamiento(String type) {
-    return null;
+  return null;
     }
 
     @Override
     public Administrador getAdministrador(String type) {
     return null;
-   }
+    }
 
     @Override
     public EdifVehiculos getVehiculo(int type, int espera) {
-     return null;
+    switch(type){
+        case 1:
+            return new EdifConvoy(espera);
+        case 2:
+            return new EdifHummer(espera);
+            
+            
+        }
+    return null;
     }
-    
     
 }

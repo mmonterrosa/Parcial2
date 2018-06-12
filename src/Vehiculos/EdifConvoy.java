@@ -5,10 +5,37 @@
  */
 package Vehiculos;
 
+import parcial2.Menu;
+
 /**
  *
  * @author MMont
  */
-public class EdifConvoy {
+public class EdifConvoy implements EdifVehiculos{
+    public String nombre ="Convoy";
+    public int vida= 500;
+        public int fasesEspera;
+        public int faseAImplementar;
+        
+
+    public EdifConvoy() {
+    }
+        
+
+    public EdifConvoy(int fasesEspera) {
+        this.fasesEspera = fasesEspera;
+        this.faseAImplementar = Menu.fase+ fasesEspera;
+    }
+
+    @Override
+    public int getFaseImplementacion() {
+     return this.faseAImplementar;
+    }
+    @Override
+    public String toString() {
+        return "\nTipo de Edificacion: "+ nombre + "\nVida: " + vida;
+   
+    }
+    
     
 }

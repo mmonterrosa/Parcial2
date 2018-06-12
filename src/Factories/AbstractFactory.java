@@ -10,6 +10,7 @@ import EdificacionRecursos.EdifRecursos;
 import EntrenamientoMilitia.Entrenamiento;
 import Militia.Militia;
 import Razas.Razas;
+import Vehiculos.EdifVehiculos;
 
 /**
  *
@@ -21,6 +22,7 @@ public interface AbstractFactory {
     public EdifRecursos getEdifRecursos (int type, int espera);
     public Entrenamiento getEntrenamiento (String type);
     public Administrador getAdministrador(String type);
+    public EdifVehiculos getVehiculo(int type, int espera);
     
             
 }

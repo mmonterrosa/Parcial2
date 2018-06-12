@@ -18,6 +18,8 @@ public class FactoryProducer {
                 return new FactoryRazas();
             case "Administrador":
                 return new FactoryAdministrador();
+            case "Vehiculo":
+                return new FactoryVehiculo();
         }
         return null;
     }
