@@ -5,20 +5,66 @@
  */
 package CentroDeMando;
 
+import Administrador.Administrador;
+import EdificacionRecursos.EdifRecursos;
+import Factories.AbstractFactory;
+import Factories.FactoryProducer;
+import java.util.ArrayList;
+import parcial2.Menu;
+
 /**
  *
  * @author MMont
  */
 public class CentroDeMando {
+   
+    
     private int nivel = 0;
-    private int vida = 500;
+    private int vida = 2500;
     
     private int oroMax=10000;
     private int plataMax=5000;
     private int cobreMax=3000;
-    private int cantOroActual=100;
+    
+    private int cantOroActual=50;
     private int cantPlataActual=100;
-    private int cantCobreActual=0;
+    private int cantCobreActual=200;
+    
+    public Administrador AdminRecursos;
+    
+    public ArrayList<EdifRecursos> pendingEdifRecursos = new ArrayList<>();
+    
+    
+    public CentroDeMando(){
+        AbstractFactory factory = FactoryProducer.getFactory("Administrador");
+        this.AdminRecursos=factory.getAdministrador("Recursos");
+        
+        
+    }
+    
+       public void addPendingEdif(){
+        for (int i =0;i<pendingEdifRecursos.size();i++){
+            if (pendingEdifRecursos.get(i).getFaseImplementacion() == Menu.fase){
+                try{
+                AdminRecursos.add(pendingEdifRecursos.get(i));
+                pendingEdifRecursos.remove(pendingEdifRecursos.get(i));
+                }
+                catch (Exception e){
+                    System.err.println("No se pudo Agregar!");
+                }
+            }
+        }
+      
+    }
+
+    /*
+     public void addPendingEdif(){
+        for (int i =0;i<pendingEdifRecursos.size();i++){
+            System.out.println("Fase De Implementacion: " + pendingEdifRecursos.get(i).getFaseImplementacion());
+             
+    }
+     }
+*/
 
     public int getNivel() {
         return nivel;
@@ -83,12 +129,5 @@ public class CentroDeMando {
     public void setCantCobreActual(int cantCobreActual) {
         this.cantCobreActual = cantCobreActual;
     }
-      
-    
-    
-    
-    
-    
-    
-    
+ 
 }

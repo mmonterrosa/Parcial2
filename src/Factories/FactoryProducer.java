@@ -16,6 +16,8 @@ public class FactoryProducer {
                 return  new FactoryRecursos();
             case "Razas":
                 return new FactoryRazas();
+            case "Administrador":
+                return new FactoryAdministrador();
         }
         return null;
     }

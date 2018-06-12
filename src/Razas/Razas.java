@@ -13,6 +13,7 @@ public interface Razas {
     void crearEdifRecursos();
     void crearEdifVehiculos();
     void crearEdifMilitia();
+    String getNombreRaza();
     
     
 }

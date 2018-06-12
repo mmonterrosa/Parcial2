@@ -25,5 +25,10 @@ public class Golems implements Razas{
     public void crearEdifMilitia() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String getNombreRaza() {
+     return "Golems";
+    }
     
 }

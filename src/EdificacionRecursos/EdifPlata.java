@@ -5,15 +5,48 @@
  */
 package EdificacionRecursos;
 
+import parcial2.Menu;
+
 /**
  *
  * @author MMont
  */
 public class EdifPlata implements EdifRecursos{
+    public int vida = 500;
+    public String nombre = "Edificacion de Plata";
+    public int fasesEspera;
+    public int faseAImplementar;
+    
 
-    @Override
-    public void recolectar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public EdifPlata() {
+    }
+
+    
+    
+    public EdifPlata(int espera) {
+        this.fasesEspera = espera;
+        this.faseAImplementar = Menu.fase + fasesEspera;
+                
     }
     
+    @Override
+    public int recolectar() {
+    return 100;
+            }
+
+    @Override
+    public int getVida() {
+    return vida;
+    }
+    
+    @Override
+    public String toString() {
+        return "Tipo de Edificacion: "+ nombre + " Vida: " + vida;
+   
+    }
+
+    @Override
+    public int getFaseImplementacion() {
+    return faseAImplementar;
+    }
 }

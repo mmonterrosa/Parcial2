@@ -25,5 +25,10 @@ public class Gigantes implements Razas{
     public void crearEdifMilitia() {
     
     }
+
+    @Override
+    public String getNombreRaza() {
+    return "Gigantes"; 
+    }
     
 }

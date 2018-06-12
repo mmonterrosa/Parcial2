@@ -10,6 +10,7 @@ package EdificacionRecursos;
  * @author MMont
  */
 public interface EdifRecursos {
-    void recolectar();
-    
+    int recolectar();
+    int getVida();
+    int getFaseImplementacion();
 }

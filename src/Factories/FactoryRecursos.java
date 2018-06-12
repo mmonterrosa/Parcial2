@@ -5,6 +5,7 @@
  */
 package Factories;
 
+import Administrador.Administrador;
 import EdificacionRecursos.EdifCobre;
 import EdificacionRecursos.EdifRecursos;
 import EntrenamientoMilitia.Entrenamiento;
@@ -30,14 +31,14 @@ public class FactoryRecursos implements AbstractFactory{
     }
 
     @Override
-    public EdifRecursos getEdifRecursos(int type) {
+    public EdifRecursos getEdifRecursos(int type, int espera) {
         switch (type){
             case 1: 
-                return new EdifOro();
+                return new EdifOro(espera);
             case 2: 
-                return new EdifPlata();
+                return new EdifPlata(espera);
             case 3: 
-                return new EdifCobre();
+                return new EdifCobre(espera);
                            
         }
         return null;
@@ -47,6 +48,11 @@ public class FactoryRecursos implements AbstractFactory{
     @Override
     public Entrenamiento getEntrenamiento(String type) {
         return null;
+    }
+
+    @Override
+    public Administrador getAdministrador(String type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

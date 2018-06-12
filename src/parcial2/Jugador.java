@@ -15,11 +15,12 @@ import Razas.Razas;
  *
  * @author MMont
  */
-public class Jugador {
+public class Jugador{
+    
     public String nombre;
     public CentroDeMando centrodemando;
     public Razas raza;
-    public EdifRecursos
+    
     
     
  public Jugador(){
@@ -45,7 +46,7 @@ public void AddRaza(int x){
                 break;
                 
             case 2: 
-                this.raza  = factory.getRazas("Elfos");
+                this.raza  = factory.getRazas("Gigantes");
                 break;
             case 3: 
                this.raza  = factory.getRazas("Golems");
