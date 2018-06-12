@@ -13,4 +13,5 @@ public interface EdifRecursos {
     int recolectar();
     int getVida();
     int getFaseImplementacion();
+    String getNombre();
 }

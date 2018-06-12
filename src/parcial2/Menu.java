@@ -28,9 +28,16 @@ public class Menu {
         Jugador arr[]={jugador1, jugador2};
         
         while(true){
-            
+            //Se añaden los edificios pendientes 
             jugador1.centrodemando.addPendingEdif();
+            //Se Recolecta el "loot" de cada fase
+            jugador1.centrodemando.Recolectar();
+            
+            
+            //Se añaden los edificios pendientes 
             jugador2.centrodemando.addPendingEdif();
+            
+            
 
             for( Jugador j : arr){
                 

@@ -49,4 +49,9 @@ public class EdifPlata implements EdifRecursos{
     public int getFaseImplementacion() {
     return faseAImplementar;
     }
+
+    @Override
+    public String getNombre() {
+    return nombre;
+    }
 }

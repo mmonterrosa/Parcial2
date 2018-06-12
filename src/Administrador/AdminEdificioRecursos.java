@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class AdminEdificioRecursos implements Administrador<EdifRecursos>{
     
-    private ArrayList<EdifRecursos> ListaEdificiosRecursos;
+    public ArrayList<EdifRecursos> ListaEdificiosRecursos;
 
     public AdminEdificioRecursos() {
         ListaEdificiosRecursos = new ArrayList<>();
@@ -48,6 +48,13 @@ public class AdminEdificioRecursos implements Administrador<EdifRecursos>{
                 System.out.println(p.toString());
             }
         }
+
+    @Override
+    public ArrayList<EdifRecursos> getLista() throws Exception {
+     return this.ListaEdificiosRecursos;
+    }
+
+
     
 
     

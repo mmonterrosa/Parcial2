@@ -5,6 +5,8 @@
  */
 package Administrador;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author MMont
@@ -15,4 +17,5 @@ public interface Administrador<E> {
      void delete(E p) throws Exception;
      void show(E p) throws Exception;
      void showAll() throws Exception;
+     ArrayList<E> getLista() throws Exception;
 }

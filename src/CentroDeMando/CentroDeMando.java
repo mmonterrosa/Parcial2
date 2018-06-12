@@ -10,6 +10,7 @@ import EdificacionRecursos.EdifRecursos;
 import Factories.AbstractFactory;
 import Factories.FactoryProducer;
 import java.util.ArrayList;
+import parcial2.Jugador;
 import parcial2.Menu;
 
 /**
@@ -65,7 +66,27 @@ public class CentroDeMando {
     }
      }
 */
+    public void Recolectar( ){
+        ArrayList<EdifRecursos> aux = new ArrayList();
+        try{
+        aux = AdminRecursos.getLista();
+        } catch(Exception e){
+            System.out.println("no se pudo pasar la lista de recursos");
+        }
+        
+        for (EdifRecursos er : aux){
+            if (er.getNombre()=="Edificacion de Cobre"){
+                this.cantCobreActual += er.recolectar();
+            }
+            if (er.getNombre()=="Edificacion de Plata"){
+                this.cantPlataActual += er.recolectar();
+            }
+            if (er.getNombre()=="Edificacion de Oro"){
+                this.cantOroActual += er.recolectar();
+            }
 
+        }
+    }
     public int getNivel() {
         return nivel;
     }

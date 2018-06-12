@@ -55,6 +55,11 @@ public class EdifCobre implements EdifRecursos{
     public int getFaseImplementacion() {
        return faseAImplementar;
      }
+
+    @Override
+    public String getNombre() {
+    return this.nombre; 
+    }
     
     
     
