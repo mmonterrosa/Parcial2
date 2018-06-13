@@ -20,6 +20,8 @@ public class FactoryProducer {
                 return new FactoryAdministrador();
             case "Vehiculo":
                 return new FactoryVehiculo();
+            case "Militia":
+                return new FactoryMilitia();
         }
         return null;
     }

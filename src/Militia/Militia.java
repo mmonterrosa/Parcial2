@@ -12,4 +12,5 @@ package Militia;
 public interface Militia {
     public void Atacar();
     public void Defender();
+    public int getFaseImplementacion();
 }

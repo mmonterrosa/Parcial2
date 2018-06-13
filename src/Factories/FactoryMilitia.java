@@ -8,10 +8,9 @@ package Factories;
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
 import EntrenamientoMilitia.Entrenamiento;
+import Militia.Escuadrones;
+import Militia.Especialistas;
 import Militia.Militia;
-import Razas.Elfos;
-import Razas.Gigantes;
-import Razas.Golems;
 import Razas.Razas;
 import Vehiculos.EdifVehiculos;
 
@@ -19,26 +18,16 @@ import Vehiculos.EdifVehiculos;
  *
  * @author MMont
  */
-public class FactoryRazas implements AbstractFactory{
+public class FactoryMilitia implements AbstractFactory {
 
     @Override
     public Razas getRazas(String type) {
-        switch (type){
-            case "Elfos":
-                return new Elfos();
-            case "Gigantes":
-                return new Gigantes();
-            case "Golems":
-                return new Golems();
-                    
-                    
-        }
-        return null;
+      return null;
     }
 
     @Override
     public Militia getMilitia(String type) {
-    return null;
+   return null;
     }
 
     @Override
@@ -54,17 +43,24 @@ public class FactoryRazas implements AbstractFactory{
     @Override
     public Administrador getAdministrador(String type) {
     return null;
-   }
+    }
 
     @Override
     public EdifVehiculos getVehiculo(int type, int espera) {
-     return null;
-    }
+   return null;}
 
     @Override
     public Militia getMilitia(int type, int espera, int ataquePorFase) {
+    switch(type){
+        case 1:
+            return new Escuadrones(espera,ataquePorFase);
+        case 2:
+            return Especialistas.getInstanced(espera, ataquePorFase);
+                           
+        } 
     return null;
-    }
     
+    
+    }
     
 }

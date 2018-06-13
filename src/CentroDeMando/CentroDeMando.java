@@ -9,6 +9,7 @@ import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
 import Factories.AbstractFactory;
 import Factories.FactoryProducer;
+import Militia.Militia;
 import Vehiculos.EdifVehiculos;
 import java.util.ArrayList;
 import parcial2.Jugador;
@@ -34,15 +35,21 @@ public class CentroDeMando {
     
     public Administrador AdminRecursos;
     public Administrador AdminVehiculos;
+    public Administrador AdminMilitia;
+    public Militia Especialista;
     
     public ArrayList<EdifRecursos> pendingEdifRecursos = new ArrayList<>();
     public ArrayList<EdifVehiculos> pendingEdifVehiculos = new ArrayList<>();
+    public ArrayList<Militia> pendingMilitia = new ArrayList<>();
+    public Militia pendingEspecialista= null;
     
     
     public CentroDeMando(){
         AbstractFactory factory = FactoryProducer.getFactory("Administrador");
         this.AdminRecursos=factory.getAdministrador("Recursos");
         this.AdminVehiculos=factory.getAdministrador("Vehiculos");
+        this.AdminMilitia=factory.getAdministrador("Militia");
+        this.Especialista = null;
         
         
     }
@@ -74,6 +81,29 @@ public class CentroDeMando {
                 }
             }
         }
+        
+
+        for (int i =0;i<pendingMilitia.size();i++){
+            if (pendingMilitia.get(i).getFaseImplementacion() == Menu.fase){
+                try{
+                    System.out.println(i);
+                    AdminMilitia.add(pendingMilitia.get(i));
+                    pendingMilitia.remove(pendingMilitia.get(i));
+                    i-=1;
+                }
+                catch (Exception e){
+                    System.err.println("No se pudo Agregar de pending militia a admin militia o no se pudo remover!");
+                }
+            }
+        }
+        
+        if((this.pendingEspecialista!=null)&&(this.pendingEspecialista.getFaseImplementacion() == Menu.fase)){
+            this.Especialista =this.pendingEspecialista;
+            this.pendingEspecialista=null;
+        }
+        
+        
+        
       
     }
 

@@ -57,5 +57,11 @@ public class FactoryVehiculo implements AbstractFactory{
         }
     return null;
     }
+
+    @Override
+    public Militia getMilitia(int type, int espera, int ataquePorFase) {
+    
+    return null;
+    }
     
 }

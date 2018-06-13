@@ -60,6 +60,11 @@ public class FactoryRecursos implements AbstractFactory{
     public EdifVehiculos getVehiculo(int type, int espera) {
     return null;
     }
+
+    @Override
+    public Militia getMilitia(int type, int espera, int ataquePorFase) {
+    return null;
+    }
     
     
 }

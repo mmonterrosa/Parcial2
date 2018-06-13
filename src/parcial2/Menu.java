@@ -9,6 +9,8 @@ import CentroDeMando.CentroDeMando;
 import EdificacionRecursos.EdifRecursos;
 import Factories.AbstractFactory;
 import Factories.FactoryProducer;
+import Militia.Escuadrones;
+import Militia.Militia;
 import Vehiculos.EdifVehiculos;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -64,10 +66,13 @@ public class Menu {
             System.out.println("6) Mostrar Edificaciones De Vehiculos Disponibles ");
             System.out.println("7) Mostrar Edificaciones De Vehiculos Pendientes ");
                     System.out.println("\nMilitia");
-            System.out.println("8) Construir un ");
+            System.out.println("8) Construir Militia ");
+            System.out.println("9) Mostrar Militia Pendiente");
+            System.out.println("10) Mostrar Militia Disponible");
+            
             System.out.println(") Atacar Enemigo");
             System.out.println(") Aumentar de Nivel");
-            System.out.println("10) Terminar Turno");
+            System.out.println("15) Terminar Turno");
             System.out.print("Ingrese una Opcion: ");
             int opcion = sc2.nextInt();
             
@@ -259,10 +264,82 @@ public class Menu {
                     
                     break;
                 case 8:
+                    System.out.println("1) Construir Escuadron     (-150 Cobre, -100 Plata)");
+                    System.out.println("2) Construir Especialista [Solo 1 A La Vez] (-100 Oro, -100 Cobre)");
+                    opcion = sc2.nextInt();
                     
+                    switch(opcion){
+                        case 1: 
+                            if((j.centrodemando.getCantCobreActual() >=150) &&(j.centrodemando.getCantPlataActual()>=100)){
+                                j.centrodemando.setCantCobreActual(j.centrodemando.getCantCobreActual()-150);
+                                j.centrodemando.setCantPlataActual(j.centrodemando.getCantPlataActual()-100);
+                                AbstractFactory factory = FactoryProducer.getFactory("Militia");
+                                try{
+                                    if(j.raza.getNombreRaza() == "Golems"){
+                                        j.centrodemando.pendingMilitia.add(factory.getMilitia(1, 2, 75));
+                                    }
+                                    else
+                                        j.centrodemando.pendingMilitia.add(factory.getMilitia(1, 2, 50));
+                                    
+                                      }catch(Exception e){
+                                            System.out.println(e.toString());
+                                        }
+                            }
+                            break;
+                            
+                        case 2:
+                            AbstractFactory factory = FactoryProducer.getFactory("Militia");
+                            Militia especialista = factory.getMilitia(2,2,50);
+                            if((j.centrodemando.Especialista!=null)&&(j.centrodemando.Especialista == especialista)){
+                                System.out.println("Ya Se Encuentra Un Especialista");
+                            }
+                            else
+                                j.centrodemando.pendingEspecialista=especialista;
+                            
+                    }
+                    
+                    
+                    
+                    
+                    
+                    
+                    break;
+                    
+                    //Mostrar los pending
+                case 9:
+                   System.out.println("Edificaciones De Militia Pendientes(En Construccion)");
+                    System.out.println("hay algun Pending Especialista: ");// + j.centrodemando.pendingEspecialista!=null);
+                    if ( (j.centrodemando.pendingMilitia.isEmpty()) && (j.centrodemando.pendingEspecialista==null)){
+                        System.err.println("No hay Ninguna Edificacion de Militia en construccion");
+                    }else{
+                    for (Militia m: j.centrodemando.pendingMilitia){
+                        System.out.println(m.toString());
+                    }
+                    
+                    if(j.centrodemando.pendingEspecialista!=null)
+                        System.out.println(j.centrodemando.pendingEspecialista.toString());
+                    
+                    }
+                   break;
+                   
+                   //Mostrar todos los disponibles
+                case 10:
+
+                    try{
+                        j.centrodemando.AdminMilitia.showAll();
+                        
+                    
+                    if(j.centrodemando.Especialista!=null)
+                            System.out.println(j.centrodemando.Especialista.toString());
+                   
+                    } catch(Exception e){
+                        System.err.println(e);
+                    }
+                    
+                    break;
 
                 
-                case 10:
+                case 15:
                     n=false;
                     break;
                     

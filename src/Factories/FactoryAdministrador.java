@@ -7,6 +7,7 @@ package Factories;
 
 import Administrador.AdminEdificioRecursos;
 import Administrador.AdminEdificioVehiculos;
+import Administrador.AdminMilitia;
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
 import EntrenamientoMilitia.Entrenamiento;
@@ -48,6 +49,9 @@ public class FactoryAdministrador implements AbstractFactory {
             return new AdminEdificioRecursos();
         case "Vehiculos":
             return new AdminEdificioVehiculos();
+        case "Militia":
+            return new AdminMilitia();
+                
             
         
         }
@@ -57,6 +61,11 @@ public class FactoryAdministrador implements AbstractFactory {
     @Override
     public EdifVehiculos getVehiculo(int type, int espera) {
       return null;
+    }
+
+    @Override
+    public Militia getMilitia(int type, int espera, int ataquePorFase) {
+    return null;
     }
     
 }

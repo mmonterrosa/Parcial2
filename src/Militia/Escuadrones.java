@@ -5,22 +5,52 @@
  */
 package Militia;
 
+import parcial2.Menu;
+
 /**
  *
  * @author MMont
  */
 public class Escuadrones implements Militia{
-    private int tiempoEspera = 1;
+    public String nombre ="Escuadron";
+    public int fasesEspera;
+    public int faseDeImplementacion;
+    public int damage;
+    
     private int vida= 500;
+
+    public Escuadrones() {
+        
+    }
+    public Escuadrones(int fasesEspera, int damage){
+        
+        this.fasesEspera=fasesEspera;
+        this.faseDeImplementacion=Menu.fase + fasesEspera;
+        this.damage=damage;
+    }
+    
+    
 
     @Override
     public void Atacar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void Defender() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int getFaseImplementacion() {
+     return this.faseDeImplementacion;
+    }
+    
+    @Override
+    public String toString(){
+        return "Tipo: " + this.nombre + "\n" + "Vida: "+ this.vida + "\n" + "Damage: " + this.damage 
+                + "\n" + "Fase de Implementacion: " + this.faseDeImplementacion + "\n";
+    }
+    
+    
+    
     
 }

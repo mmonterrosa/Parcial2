@@ -23,6 +23,8 @@ public interface AbstractFactory {
     public Entrenamiento getEntrenamiento (String type);
     public Administrador getAdministrador(String type);
     public EdifVehiculos getVehiculo(int type, int espera);
+    Militia getMilitia(int type, int espera, int ataquePorFase);
+    
     
             
 }
