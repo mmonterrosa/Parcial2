@@ -54,5 +54,10 @@ public class AdminMilitia implements Administrador<Militia>{
     return this.ListaDeMilitia;
     }
 
+    @Override
+    public void setLista(ArrayList<Militia> x) throws Exception {
+     this.ListaDeMilitia= x;
+    }
+
     
 }

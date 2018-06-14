@@ -18,4 +18,5 @@ public interface Administrador<E> {
      void show(E p) throws Exception;
      void showAll() throws Exception;
      ArrayList<E> getLista() throws Exception;
+     void setLista(ArrayList<E> x) throws Exception;
 }

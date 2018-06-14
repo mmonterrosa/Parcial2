@@ -7,7 +7,6 @@ package Factories;
 
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
-import EntrenamientoMilitia.Entrenamiento;
 import Militia.Militia;
 import Razas.Razas;
 import Vehiculos.EdifVehiculos;
@@ -20,7 +19,6 @@ public interface AbstractFactory {
     public Razas getRazas(String type);
     public Militia getMilitia(String type);
     public EdifRecursos getEdifRecursos (int type, int espera);
-    public Entrenamiento getEntrenamiento (String type);
     public Administrador getAdministrador(String type);
     public EdifVehiculos getVehiculo(int type, int espera);
     Militia getMilitia(int type, int espera, int ataquePorFase);

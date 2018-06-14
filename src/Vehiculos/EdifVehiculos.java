@@ -12,5 +12,6 @@ package Vehiculos;
 public interface EdifVehiculos {
 
     int getFaseImplementacion();
+    String getNombre();
     
 }

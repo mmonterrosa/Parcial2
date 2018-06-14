@@ -7,6 +7,7 @@ package parcial2;
 
 import CentroDeMando.CentroDeMando;
 import EdificacionRecursos.EdifRecursos;
+import EntrenamientoMilitia.Cuartel;
 import Factories.AbstractFactory;
 import Factories.FactoryProducer;
 import Militia.Escuadrones;
@@ -32,6 +33,7 @@ public class Menu {
         Jugador arr[]={jugador1, jugador2};
         
         while(true){
+            /*
             //Se añaden los edificios pendientes 
             jugador1.centrodemando.addPendingEdif();
             //Se Recolecta el "loot" de cada fase
@@ -43,9 +45,17 @@ public class Menu {
             //Se Recolecta el "loot" de cada fase
             jugador2.centrodemando.Recolectar();
             
+            */
+            jugador1.centrodemando.Atacar(jugador2);
+            jugador2.centrodemando.Atacar(jugador1);
+            
+            jugador1.centrodemando.cleanListasEdif();
+            jugador2.centrodemando.cleanListasEdif();
             
 
             for( Jugador j : arr){
+                j.centrodemando.addPendingEdif();
+                j.centrodemando.Recolectar();
                 
                 boolean n=true;
                 while (n){
@@ -69,8 +79,10 @@ public class Menu {
             System.out.println("8) Construir Militia ");
             System.out.println("9) Mostrar Militia Pendiente");
             System.out.println("10) Mostrar Militia Disponible");
+            System.out.println("11) Construir Cuartel");
             
-            System.out.println(") Atacar Enemigo");
+            System.out.println("12) Atacar Enemigo");
+            
             System.out.println(") Aumentar de Nivel");
             System.out.println("15) Terminar Turno");
             System.out.print("Ingrese una Opcion: ");
@@ -263,7 +275,14 @@ public class Menu {
                     
                     
                     break;
+                    
+                    //Construir Militia
                 case 8:
+                    if (j.centrodemando.cuartel==null){
+                        System.err.println("No Tiene Ningun Cuartel Disponible! ");
+                    }
+                    else{
+                    
                     System.out.println("1) Construir Escuadron     (-150 Cobre, -100 Plata)");
                     System.out.println("2) Construir Especialista [Solo 1 A La Vez] (-100 Oro, -100 Cobre)");
                     opcion = sc2.nextInt();
@@ -277,9 +296,11 @@ public class Menu {
                                 try{
                                     if(j.raza.getNombreRaza() == "Golems"){
                                         j.centrodemando.pendingMilitia.add(factory.getMilitia(1, 2, 75));
+                                        System.out.println("Escuadon en Entrenamiento, Tardara 2 Fases!");
                                     }
                                     else
                                         j.centrodemando.pendingMilitia.add(factory.getMilitia(1, 2, 50));
+                                        System.out.println("Escuadon en Entrenamiento, Tardara 2 Fases!");
                                     
                                       }catch(Exception e){
                                             System.out.println(e.toString());
@@ -293,10 +314,21 @@ public class Menu {
                             if((j.centrodemando.Especialista!=null)&&(j.centrodemando.Especialista == especialista)){
                                 System.out.println("Ya Se Encuentra Un Especialista");
                             }
-                            else
+                            else if((j.centrodemando.getCantOroActual()>=100) &&(j.centrodemando.getCantCobreActual()>=100)){
+                                j.centrodemando.setCantOroActual(j.centrodemando.getCantOroActual()-100);
+                                j.centrodemando.setCantCobreActual(j.centrodemando.getCantCobreActual()-100);
                                 j.centrodemando.pendingEspecialista=especialista;
+                                System.out.println("Especialista en Entrenamiento, Tardara 2 Fases!");
+                                
+                            }else{
+                                System.err.println("No Tiene Suficientes Recursos");
+                            }
+                                //j.centrodemando.pendingEspecialista=especialista;
+                            
                             
                     }
+                   }
+                    
                     
                     
                     
@@ -335,6 +367,147 @@ public class Menu {
                     } catch(Exception e){
                         System.err.println(e);
                     }
+                    
+                    break;
+                    
+                    //Construir Cuartel
+                case 11:
+                    if(j.centrodemando.getCantCobreActual()>=50){
+                        j.centrodemando.setCantCobreActual(j.centrodemando.getCantCobreActual()-50);
+                        j.centrodemando.pendingCuartel = Cuartel.getInstanced(1);
+                    }
+                    else System.out.println("No posee Suficientes Recursos");
+                    
+                    
+                    break;
+                    
+                    //Atacar
+                case 12:
+                    try{
+                        if(j == jugador1){
+                        System.out.print("Usted Posee: " + j.centrodemando.AdminMilitia.getLista().size() + " Escuadrones Disponibles/Vivos \n");
+                        if(j.centrodemando.Especialista != null) System.out.print(" Y 1 Especialista\n");
+                        
+                        System.out.println("1) Atacar Edificacion de Recursos Enemiga ");
+                        System.out.println("2) Atacar Vehiculos Enemigos");
+                        System.out.println("3) Atacar Centro de Mando");
+                        opcion = sc2.nextInt();
+                        
+                        switch(opcion){
+                            case 1:
+                                if(jugador2.centrodemando.AdminRecursos.getLista().isEmpty()){
+                                    System.err.println("El Enemigo no Posee Ninguna Edificacion de Recursos");
+                                }else{
+                                    int x=0;
+                                    ArrayList<Militia> arm =j.centrodemando.AdminMilitia.getLista();
+                                    for(Militia m : arm){
+                                        if (m.getEstadoAtacando() == 0) x++;
+                                    }
+                                    System.out.println("Escuadrones Disponible Para Atacar: " + x);
+                                    System.out.print("Especialista Disponible: ");
+                                     if((j.centrodemando.Especialista != null)&&(j.centrodemando.Especialista.getEstadoAtacando()==0)) System.out.println(" 1"); else System.out.println("0");
+                                    
+                                     if((x==0)&&(j.centrodemando.Especialista == null)) {
+                                         System.err.println("No Posee Militia");
+                                         break;
+                                     }
+                                     
+                                     while(true){
+                                     System.out.println("Ingrese Cantidad de Escuadrones a Utilizar ");
+                                     opcion = sc2.nextInt();
+                                     if((opcion<=x)||(opcion>0))break;
+                                     System.err.println("Ingrese Cantidad Valida!");
+                                     }
+                                     
+                                     int aux=0;
+                                     for(Militia m : arm){
+                                         if (m.getEstadoAtacando() == 0) {
+                                             m.setEstadoAtacando(1);
+                                             aux++;
+                                         }
+                                         
+                                         if(aux>=opcion)break;
+                                     }
+                                     if(j.centrodemando.Especialista.getEstadoAtacando()==0){
+                                     System.out.println("Desea Utilizar El Especialista Para El Ataque? 1)Si 2)No");
+                                     opcion = sc2.nextInt();
+                                     if(opcion==1)j.centrodemando.Especialista.setEstadoAtacando(1);
+                                     }
+                                     
+                                    
+                                }
+                                
+                                break;
+                            
+                            }
+                             
+
+                        }
+                        
+                        else if(j==jugador2){
+                            System.out.print("Usted Posee: " + j.centrodemando.AdminMilitia.getLista().size() + " Escuadrones Disponibles/Vivos \n");
+                        if(j.centrodemando.Especialista != null) System.out.print(" Y 1 Especialista\n");
+                        
+                        System.out.println("1) Atacar Edificacion de Recursos Enemiga ");
+                        System.out.println("2) Atacar Vehiculos Enemigos");
+                        System.out.println("3) Atacar Centro de Mando");
+                        opcion = sc2.nextInt();
+                        
+                        switch(opcion){
+                            case 1:
+                                if(jugador1.centrodemando.AdminRecursos.getLista().isEmpty()){
+                                    System.err.println("El Enemigo no Posee Ninguna Edificacion de Recursos");
+                                }else{
+                                    int x=0;
+                                    ArrayList<Militia> arm =j.centrodemando.AdminMilitia.getLista();
+                                    for(Militia m : arm){
+                                        if (m.getEstadoAtacando() == 0) x++;
+                                    }
+                                    System.out.println("Escuadrones Disponible Para Atacar: " + x);
+                                    System.out.print("Especialista Disponible: ");
+                                     if((j.centrodemando.Especialista != null)&&(j.centrodemando.Especialista.getEstadoAtacando()==0)) System.out.println(" 1"); else System.out.println("0");
+                                    
+                                     if((x==0)&&(j.centrodemando.Especialista == null)) {
+                                         System.err.println("No Posee Militia");
+                                         break;
+                                     }
+                                     
+                                     while(true){
+                                     System.out.println("Ingrese Cantidad de Escuadrones a Utilizar ");
+                                     opcion = sc2.nextInt();
+                                     if((opcion<=x)||(opcion>0))break;
+                                     System.err.println("Ingrese Cantidad Valida!");
+                                     }
+                                     
+                                     int aux=0;
+                                     for(Militia m : arm){
+                                         if (m.getEstadoAtacando() == 0) {
+                                             m.setEstadoAtacando(1);
+                                             aux++;
+                                         }
+                                         
+                                         if(aux>=opcion)break;
+                                     }
+                                     if(j.centrodemando.Especialista.getEstadoAtacando()==0){
+                                     System.out.println("Desea Utilizar El Especialista Para El Ataque? 1)Si 2)No");
+                                     opcion = sc2.nextInt();
+                                     if(opcion==1)j.centrodemando.Especialista.setEstadoAtacando(1);
+                                     }
+                                     
+                                    
+                                }
+                                
+                                break;
+                            
+                            }
+
+                        }
+                    } catch(Exception e){
+                        
+                    }
+                    
+                    
+                    
                     
                     break;
 

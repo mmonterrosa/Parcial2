@@ -7,7 +7,6 @@ package Factories;
 
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
-import EntrenamientoMilitia.Entrenamiento;
 import Militia.Militia;
 import Razas.Elfos;
 import Razas.Gigantes;
@@ -46,10 +45,6 @@ public class FactoryRazas implements AbstractFactory{
     return null;
     }
 
-    @Override
-    public Entrenamiento getEntrenamiento(String type) {
-    return null;
-    }
 
     @Override
     public Administrador getAdministrador(String type) {

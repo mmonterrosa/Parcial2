@@ -12,6 +12,7 @@ package EdificacionRecursos;
 public interface EdifRecursos {
     int recolectar();
     int getVida();
+    void setVida(int x);
     int getFaseImplementacion();
     String getNombre();
 }

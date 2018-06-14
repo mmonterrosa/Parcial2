@@ -5,6 +5,9 @@
  */
 package Militia;
 
+import CentroDeMando.CentroDeMando;
+import EdificacionRecursos.EdifRecursos;
+import Vehiculos.EdifVehiculos;
 import parcial2.Menu;
 
 /**
@@ -12,6 +15,10 @@ import parcial2.Menu;
  * @author MMont
  */
 public class Escuadrones implements Militia{
+    
+     //0=no, 1=recursos, 2=vehicuos
+    public int estadoAtacando =0;
+    public int faseDeAtaque;
     public String nombre ="Escuadron";
     public int fasesEspera;
     public int faseDeImplementacion;
@@ -32,10 +39,6 @@ public class Escuadrones implements Militia{
     
 
     @Override
-    public void Atacar() {
-    }
-
-    @Override
     public void Defender() {
     }
 
@@ -49,7 +52,37 @@ public class Escuadrones implements Militia{
         return "Tipo: " + this.nombre + "\n" + "Vida: "+ this.vida + "\n" + "Damage: " + this.damage 
                 + "\n" + "Fase de Implementacion: " + this.faseDeImplementacion + "\n";
     }
-    
+
+    @Override
+    public String getNombre() {
+      return this.nombre;
+    }
+
+    @Override
+    public int getEstadoAtacando() {
+     return this.estadoAtacando;
+    }
+
+    @Override
+    public void setEstadoAtacando(int x) {
+    this.estadoAtacando=x;
+    }
+
+
+    @Override
+    public int getDaseDeAtaque() {
+      return this.faseDeAtaque;
+    }
+
+    @Override
+    public void setFaseDeAtaque(int x) {
+       this.faseDeAtaque= x;
+    }
+
+    @Override
+    public int Atacar() {
+    return damage;
+    }
     
     
     

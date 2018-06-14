@@ -10,7 +10,6 @@ import Administrador.AdminEdificioVehiculos;
 import Administrador.AdminMilitia;
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
-import EntrenamientoMilitia.Entrenamiento;
 import Militia.Militia;
 import Razas.Razas;
 import Vehiculos.EdifVehiculos;
@@ -37,10 +36,6 @@ public class FactoryAdministrador implements AbstractFactory {
     return null;
     }
 
-    @Override
-    public Entrenamiento getEntrenamiento(String type) {
-    return null;
-    }
 
     @Override
     public Administrador getAdministrador(String type) {

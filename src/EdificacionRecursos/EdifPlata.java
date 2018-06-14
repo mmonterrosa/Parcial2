@@ -12,6 +12,7 @@ import parcial2.Menu;
  * @author MMont
  */
 public class EdifPlata implements EdifRecursos{
+    public int lootPorFase=100;
     public int vida = 500;
     public String nombre = "Edificacion de Plata";
     public int fasesEspera;
@@ -31,7 +32,7 @@ public class EdifPlata implements EdifRecursos{
     
     @Override
     public int recolectar() {
-    return 100;
+    return lootPorFase;
             }
 
     @Override
@@ -53,5 +54,10 @@ public class EdifPlata implements EdifRecursos{
     @Override
     public String getNombre() {
     return nombre;
+    }
+    
+     @Override
+    public void setVida(int x) {
+    this.vida=x;
     }
 }

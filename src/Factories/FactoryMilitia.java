@@ -7,7 +7,6 @@ package Factories;
 
 import Administrador.Administrador;
 import EdificacionRecursos.EdifRecursos;
-import EntrenamientoMilitia.Entrenamiento;
 import Militia.Escuadrones;
 import Militia.Especialistas;
 import Militia.Militia;
@@ -35,10 +34,6 @@ public class FactoryMilitia implements AbstractFactory {
     return null;
     }
 
-    @Override
-    public Entrenamiento getEntrenamiento(String type) {
-    return null;
-    }
 
     @Override
     public Administrador getAdministrador(String type) {

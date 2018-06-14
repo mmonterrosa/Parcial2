@@ -51,6 +51,13 @@ public class AdminEdificioVehiculos implements Administrador<EdifVehiculos>{
     public ArrayList<EdifVehiculos> getLista() throws Exception {
     return this.ListaEdificiosVehiculos;
     }
+
+    @Override
+    public void setLista(ArrayList<EdifVehiculos> x) throws Exception {
+    this.ListaEdificiosVehiculos = x;
+            }
+    
+ 
     
  
     

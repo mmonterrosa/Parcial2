@@ -54,6 +54,11 @@ public class AdminEdificioRecursos implements Administrador<EdifRecursos>{
      return this.ListaEdificiosRecursos;
     }
 
+    @Override
+    public void setLista(ArrayList<EdifRecursos> x) throws Exception {
+    this.ListaEdificiosRecursos = x;
+    }
+
 
     
 

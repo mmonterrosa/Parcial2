@@ -35,6 +35,11 @@ public class EdifHummer implements EdifVehiculos{
         return "\nTipo de Edificacion: "+ nombre + "\nVida: " + vida;
    
     }
+
+    @Override
+    public String getNombre() {
+    return this.nombre;
+    }
         
         
 }
