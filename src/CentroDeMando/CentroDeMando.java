@@ -24,7 +24,7 @@ public class CentroDeMando {
    
     
     private int nivel = 0;
-    private int vida = 2500;
+    private int vida = 500;
     
     private int oroMax=10000;
     private int plataMax=5000;
@@ -63,11 +63,13 @@ public class CentroDeMando {
     }
     
        public void addPendingEdif(){
+           int aux = 0;
         for (int i =0;i<pendingEdifRecursos.size();i++){
             if (pendingEdifRecursos.get(i).getFaseImplementacion() == Menu.fase){
                 try{
                 AdminRecursos.add(pendingEdifRecursos.get(i));
-                    System.out.println("Se Construyo Una Edificacion de Recursos Y Ahora Esta Activa! ");
+                   // System.out.println("Se Construyo Una Edificacion de Recursos Y Ahora Esta Activa! ");
+                    aux++;
                 pendingEdifRecursos.remove(pendingEdifRecursos.get(i));
                 i-=1;
                 }
@@ -76,13 +78,15 @@ public class CentroDeMando {
                 }
             }
         }
+        if (aux!=0)System.out.println("Se Construyeron: " + aux +" Edificacion de Recursos Y Ahora Estan Activa! ");
         
-        
+        aux=0;
         for (int i =0;i<pendingEdifVehiculos.size();i++){
             if (pendingEdifVehiculos.get(i).getFaseImplementacion() == Menu.fase){
                 try{
                 AdminVehiculos.add(pendingEdifVehiculos.get(i));
-                System.out.println("Se Construyo Una: " + pendingEdifVehiculos.get(i).getNombre() + " Y Ahora Esta Activo!");
+                //System.out.println("Se Construyo Una: " + pendingEdifVehiculos.get(i).getNombre() + " Y Ahora Esta Activo!");
+                aux++;
                 pendingEdifVehiculos.remove(pendingEdifVehiculos.get(i));
                 i-=1;
                 }
@@ -91,15 +95,17 @@ public class CentroDeMando {
                 }
             }
         }
+        if (aux!=0)System.out.println("Se Construyo:" +aux+ "Vehiculos Y Ahora Estan Activo!");
+                
         
-
+         aux=0;
         for (int i =0;i<pendingMilitia.size();i++){
             if (pendingMilitia.get(i).getFaseImplementacion() == Menu.fase){
                 try{
                     System.out.println(i);
                     AdminMilitia.add(pendingMilitia.get(i));
-                    System.out.println( pendingMilitia.get(i).getNombre() + " Termino de Entrenar Y Ahora Esta Activo!");
-                
+                    //System.out.println( pendingMilitia.get(i).getNombre() + " Termino de Entrenar Y Ahora Esta Activo!");
+                    aux++;
                     pendingMilitia.remove(pendingMilitia.get(i));
                     i-=1;
                 }
@@ -108,7 +114,8 @@ public class CentroDeMando {
                 }
             }
         }
-        
+        if(aux!=0)System.out.println(aux +" Escuadrones Terminaron de Entrenar Y Ahora Estan Activos!");
+                    
         if((this.pendingEspecialista!=null)&&(this.pendingEspecialista.getFaseImplementacion() == Menu.fase)){
             this.Especialista =this.pendingEspecialista;
             this.pendingEspecialista=null;
@@ -124,56 +131,165 @@ public class CentroDeMando {
       
     }
 
-       public void Atacar(Jugador enemigo) {
+       public void AtacarRecursos(Jugador enemigo) {
            
            try{
                //AtacarRecursos
-               
-               //Si la lista de Recursos del enemigo esta vacia, se regresan al cuartel
-               if(enemigo.centrodemando.AdminRecursos.getLista().isEmpty()){
+               //Si hay militita y el enemigo no tiene edif recursos
+               if(!(this.AdminMilitia.getLista().isEmpty())&&(enemigo.centrodemando.AdminRecursos.getLista().isEmpty())){
                    ArrayList<Militia> arm2 = this.AdminMilitia.getLista();
                    for (Militia m : arm2){
                     if (m.getEstadoAtacando()==1){
-                        m.setEstadoAtacando(0);
+                        //Que ataque a Vehiculos
+                        m.setEstadoAtacando(2);
                         this.AdminMilitia.setLista(arm2);  
-                        System.out.println("La Militia Ha Destruido Todas las Edificaciones, Y Ahora Retornaran Al Cuartel!");
+                        
                         }
                    }
-                   this.Especialista.setEstadoAtacando(0);
                    
+                   if(this.Especialista!=null){
+                       this.Especialista.setEstadoAtacando(2);
+                       System.out.println("El Especialista ahora ataca Vehiculos");
+                   }
                    
-               }else{
+                  
+               }
+               
+             //Si hay militia y  el enemigo tiene edif recursos
+               else if (!(this.AdminMilitia.getLista().isEmpty())&&!(enemigo.centrodemando.AdminRecursos.getLista().isEmpty())){
                    
            ArrayList<Militia> arm = this.AdminMilitia.getLista();
-           ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
+           //ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
            for (Militia m : arm){
                if (m.getEstadoAtacando()==1){
-                   //ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
+                   ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
                    aux1.get(0).setVida(aux1.get(0).getVida()-m.Atacar());
-                   //enemigo.centrodemando.AdminRecursos.setLista(aux1);
+                   if(aux1.get(0).getVida()<=0)  aux1.remove(0);
+                   enemigo.centrodemando.AdminRecursos.setLista(aux1);
+                   if(enemigo.centrodemando.AdminRecursos.getLista().isEmpty())break;
 
                }
                    
             }
-           if((this.Especialista!=null)&&(this.Especialista.getEstadoAtacando()==1))aux1.get(0).setVida(aux1.get(0).getVida()-this.Especialista.Atacar());
+          /* 
+           ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
+           if(!(aux1.isEmpty())&&(this.Especialista!=null)&&(this.Especialista.getEstadoAtacando()==1))aux1.get(0).setVida(aux1.get(0).getVida()-this.Especialista.Atacar());
            enemigo.centrodemando.AdminRecursos.setLista(aux1);
+            */
                }
-               
-               //AtacarVehiculos
-               
-           
-           
+            
+            ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
+           if(!(aux1.isEmpty())&&(this.Especialista!=null)&&(this.Especialista.getEstadoAtacando()==1))aux1.get(0).setVida(aux1.get(0).getVida()-this.Especialista.Atacar());
+           enemigo.centrodemando.AdminRecursos.setLista(aux1);
+             
            }catch(Exception e){
                
            }
+              
            
        }
+       
+       public void AtacarVehiculos(Jugador enemigo){
+           try{
+               
+               //AtacarVehiculos
+               //Si Hay Militia y la lista de Vehiculos del enemigo esta vacia
+               if(!(this.AdminMilitia.getLista().isEmpty())&&(enemigo.centrodemando.AdminVehiculos.getLista().isEmpty())){
+                   ArrayList<Militia> arm2 = this.AdminMilitia.getLista();
+                   for (Militia m : arm2){
+                       //Si militia esta atacando vehiculos
+                    if (m.getEstadoAtacando()==2){
+                        //militia ataca a centro de mando
+                        m.setEstadoAtacando(3);
+                        this.AdminMilitia.setLista(arm2);
+                        this.Especialista.setEstadoAtacando(3);
+                        System.out.println("Escuadron Ha Destruido Todas los Vehiculos, Y Ahora Atacaran Al Centro de Mando!");
+                        }
+   
+                   }
+
+                  //Si Hay Militia Si el enemigo tiene vehiculos  
+               }else if(!(this.AdminMilitia.getLista().isEmpty())&&!(enemigo.centrodemando.AdminVehiculos.getLista().isEmpty())){
+                   
+           ArrayList<Militia> arm = this.AdminMilitia.getLista();
+           
+           for (Militia m : arm){
+               ArrayList<EdifVehiculos> aux1 =  enemigo.centrodemando.AdminVehiculos.getLista();
+               if (m.getEstadoAtacando()==2){
+                   //ArrayList<EdifRecursos> aux1 =  enemigo.centrodemando.AdminRecursos.getLista();
+                   aux1.get(0).setVida(aux1.get(0).getVida()-m.Atacar());
+                   if(aux1.get(0).getVida()<=0) aux1.remove(0);
+                   enemigo.centrodemando.AdminVehiculos.setLista(aux1);
+                   if(aux1.isEmpty())break;
+
+               }
+                   
+            }
+           
+           
+               }
+               
+              
+               ArrayList<EdifVehiculos> aux2 =  enemigo.centrodemando.AdminVehiculos.getLista();
+           if(!(aux2.isEmpty())&&(this.Especialista!=null)&&(this.Especialista.getEstadoAtacando()==2))aux2.get(0).setVida(aux2.get(0).getVida()-this.Especialista.Atacar());
+           enemigo.centrodemando.AdminVehiculos.setLista(aux2);
+               
+           }catch(Exception e){
+               
+           }
+       }
+       public void AtacarCentroDeMando(Jugador enemigo){
+           try{
+               //Si la lista de recursos contiene un edif recursos nuevo
+               if(!(enemigo.centrodemando.AdminRecursos.getLista().isEmpty())){
+                   ArrayList<Militia> aux = AdminMilitia.getLista();
+                   for(Militia m : aux){
+                       //Hacemos que la militia ataque a este primero
+                        if(m.getEstadoAtacando()!=0)m.setEstadoAtacando(1);
+                        this.AdminMilitia.setLista(aux);
+                    }
+                   
+               }
+               
+               //Si la lista de vehiculos contiene un vehiculo nuevo
+               else if(!(enemigo.centrodemando.AdminVehiculos.getLista().isEmpty())){
+                   ArrayList<Militia> aux = AdminMilitia.getLista();
+                   for(Militia m : aux){
+                       //Hacemos que la militia ataque a este primero
+                        if(m.getEstadoAtacando()!=0)m.setEstadoAtacando(2);
+                        this.AdminMilitia.setLista(aux);
+                    }
+               }
+               
+               else if((enemigo.centrodemando.AdminRecursos.getLista().isEmpty())&&(enemigo.centrodemando.AdminVehiculos.getLista().isEmpty())){
+               ArrayList<Militia> aux = AdminMilitia.getLista();
+               for(Militia m : aux){
+                   if(m.getEstadoAtacando()==3)enemigo.centrodemando.vida -= m.Atacar(); 
+               }
+               if(enemigo.centrodemando.vida<=0){
+                   System.out.println(enemigo.nombre + "Ha Perdido");
+                   System.exit(0);
+               }
+           }
+               
+               }catch(Exception e){
+                   
+               }
+       }
+       
        public void cleanListasEdif(){
            try{
+               
+               //Eliminamos Edif Recursos destruidos con 0 vida
            ArrayList<EdifRecursos> aux1 =  AdminRecursos.getLista();
            if(aux1.get(0).getVida()<=0){
                this.AdminRecursos.delete(this.AdminRecursos.getLista().get(0));
-               
+            }
+           
+           //Eliminamos Edif Vehiculos destruidos con 0 vida
+            ArrayList<EdifVehiculos> aux2 =  this.AdminVehiculos.getLista();
+           if(aux2.get(0).getVida()<=0){
+               this.AdminVehiculos.delete(this.AdminVehiculos.getLista().get(0));
             }
            
            }catch(Exception e){
@@ -183,14 +299,13 @@ public class CentroDeMando {
      
 
     public void Recolectar( ){
-        ArrayList<EdifRecursos> aux = new ArrayList();
+        ArrayList<EdifRecursos> auxrecolect = new ArrayList();
         try{
-        aux = AdminRecursos.getLista();
-        } catch(Exception e){
-            System.out.println("no se pudo pasar la lista de recursos");
-        }
+                this.AdminRecursos.showAll();
+        auxrecolect = AdminRecursos.getLista();
         
-        for (EdifRecursos er : aux){
+        if(!auxrecolect.isEmpty()){
+         for (EdifRecursos er : auxrecolect){
             if (er.getNombre()=="Edificacion de Cobre"){
                 this.cantCobreActual += er.recolectar();
             }
@@ -201,7 +316,14 @@ public class CentroDeMando {
                 this.cantOroActual += er.recolectar();
             }
 
+            }
         }
+         
+         
+        } catch(Exception e){
+            System.out.println("no se pudo pasar la lista de recursos linea 320" + e.getMessage());
+        }
+        
     }
     public int getNivel() {
         return nivel;

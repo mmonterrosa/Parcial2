@@ -33,6 +33,7 @@ public class EdifConvoy implements EdifVehiculos{
     }
     @Override
     public String toString() {
+
         return "\nTipo de Edificacion: "+ nombre + "\nVida: " + vida;
    
     }
@@ -40,6 +41,16 @@ public class EdifConvoy implements EdifVehiculos{
     @Override
     public String getNombre() {
    return this.nombre;
+    }
+
+    @Override
+    public int getVida() {
+     return this.vida;
+    }
+
+    @Override
+    public void setVida(int x) {
+    this.vida=x;
     }
     
     

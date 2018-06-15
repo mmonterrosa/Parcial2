@@ -17,7 +17,7 @@ import parcial2.Menu;
 public class Especialistas implements Militia{
     private static Especialistas instance; //Singleton
     
-    //0=no, 1=recursos, 2=vehicuos
+    //0=no, 1=recursos, 2=vehicuos, 3= Centro De Mando
     public int estadoAtacando =0;
     public int faseDeAtaque;
     public String nombre = "Especialista";
@@ -64,8 +64,13 @@ public class Especialistas implements Militia{
 
     @Override
     public String toString(){
+        String estado= "No Esta Atacando";
+        if(this.estadoAtacando==1)estado="Atacando Recursos";
+        if(this.estadoAtacando==2)estado="Atacando Vehiculos";
+        if(this.estadoAtacando==3)estado="Atacando Centro De Mando";
         return "Tipo: " + this.nombre + "\n" + "Vida: "+ this.vida + "\n" + "Damage: " + this.damage 
-                + "\n" + "Fase de Implementacion: " + this.faseDeImplementacion + "\n";
+                + "\n" + "Fase de Implementacion: " + this.faseDeImplementacion
+                + "\n" + "Estado: " + estado;
     }
 
     @Override

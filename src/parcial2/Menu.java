@@ -33,35 +33,31 @@ public class Menu {
         Jugador arr[]={jugador1, jugador2};
         
         while(true){
-            /*
-            //Se añaden los edificios pendientes 
+            System.out.println("Notificaciones de: "+ jugador1.nombre);
+            jugador1.centrodemando.AtacarCentroDeMando(jugador2);
+           jugador1.centrodemando.AtacarVehiculos(jugador2);
+            jugador1.centrodemando.AtacarRecursos(jugador2);
             jugador1.centrodemando.addPendingEdif();
-            //Se Recolecta el "loot" de cada fase
+            jugador1.centrodemando.cleanListasEdif();
             jugador1.centrodemando.Recolectar();
             
-            
-            //Se añaden los edificios pendientes 
-            jugador2.centrodemando.addPendingEdif();
-            //Se Recolecta el "loot" de cada fase
-            jugador2.centrodemando.Recolectar();
-            
-            */
-            jugador1.centrodemando.Atacar(jugador2);
-            jugador2.centrodemando.Atacar(jugador1);
-            
-            jugador1.centrodemando.cleanListasEdif();
+            System.out.println("Notificaciones de: "+ jugador2.nombre);
+            jugador2.centrodemando.AtacarCentroDeMando(jugador1);
+           jugador2.centrodemando.AtacarVehiculos(jugador1);
+            jugador2.centrodemando.AtacarRecursos(jugador1);
             jugador2.centrodemando.cleanListasEdif();
+            jugador2.centrodemando.addPendingEdif();
+            jugador2.centrodemando.Recolectar();
             
 
             for( Jugador j : arr){
-                j.centrodemando.addPendingEdif();
-                j.centrodemando.Recolectar();
                 
                 boolean n=true;
                 while (n){
             System.out.println("--------------" );
             System.out.println("Turno de: " + j.nombre);
             System.out.println("Fase: " + fase);
+            System.out.println("Vida Del Centro De Mando: " + j.centrodemando.getVida());
             System.out.println("Nivel: " + j.centrodemando.getNivel());
             System.out.println("---------------");
             System.out.println("Opciones: ");
@@ -182,7 +178,7 @@ public class Menu {
                         j.centrodemando.AdminRecursos.showAll();
                     }
                     catch (Exception e){
-                        System.out.println("No se Pudo Mostrar");
+                        System.out.println("No se Pudo Mostrar " + e);
                     }
                     System.out.println("----------------------------------------------------------------------------");
                     System.out.println("----------------------------------------------------------------------------");
@@ -384,13 +380,13 @@ public class Menu {
                     //Atacar
                 case 12:
                     try{
+                        
                         if(j == jugador1){
                         System.out.print("Usted Posee: " + j.centrodemando.AdminMilitia.getLista().size() + " Escuadrones Disponibles/Vivos \n");
                         if(j.centrodemando.Especialista != null) System.out.print(" Y 1 Especialista\n");
                         
-                        System.out.println("1) Atacar Edificacion de Recursos Enemiga ");
-                        System.out.println("2) Atacar Vehiculos Enemigos");
-                        System.out.println("3) Atacar Centro de Mando");
+                        System.out.println("1) Atacar Edificaciones ");
+                        System.out.println("2) Atacar Centro de Mando");
                         opcion = sc2.nextInt();
                         
                         switch(opcion){
@@ -415,7 +411,7 @@ public class Menu {
                                      while(true){
                                      System.out.println("Ingrese Cantidad de Escuadrones a Utilizar ");
                                      opcion = sc2.nextInt();
-                                     if((opcion<=x)||(opcion>0))break;
+                                     if((opcion<=x)&&(opcion>=0))break;
                                      System.err.println("Ingrese Cantidad Valida!");
                                      }
                                      
@@ -437,20 +433,64 @@ public class Menu {
                                     
                                 }
                                 
+                                    break;
+                                case 2:
+                                //Si enemigo no tiene edif recursos y no tiene vehiculos
+                                if((jugador2.centrodemando.AdminRecursos.getLista().isEmpty())&&(jugador2.centrodemando.AdminVehiculos.getLista().isEmpty())){
+                                    int x=0;
+                                    ArrayList<Militia> arm =j.centrodemando.AdminMilitia.getLista();
+                                    for(Militia m : arm){
+                                        if (m.getEstadoAtacando() == 0) x++;
+                                    }
+                                    System.out.println("Escuadrones Disponible Para Atacar: " + x);
+                                    System.out.print("Especialista Disponible: ");
+                                     if((j.centrodemando.Especialista != null)&&(j.centrodemando.Especialista.getEstadoAtacando()==0)) System.out.println(" 1"); else System.out.println("0");
+                                    
+                                     if((x==0)&&(j.centrodemando.Especialista == null)) {
+                                         System.err.println("No Posee Militia");
+                                         break;
+                                     }
+                                     
+                                     while(true){
+                                     System.out.println("Ingrese Cantidad de Escuadrones a Utilizar ");
+                                     opcion = sc2.nextInt();
+                                     if((opcion<=x)||(opcion>=0))break;
+                                     System.err.println("Ingrese Cantidad Valida!");
+                                     }
+                                     
+                                     int aux=0;
+                                     for(Militia m : arm){
+                                         if (m.getEstadoAtacando() == 0) {
+                                             m.setEstadoAtacando(3);
+                                             aux++;
+                                         }
+                                         
+                                         if(aux>=opcion)break;
+                                     }
+                                     if(j.centrodemando.Especialista.getEstadoAtacando()==0){
+                                     System.out.println("Desea Utilizar El Especialista Para El Ataque? 1)Si 2)No");
+                                     opcion = sc2.nextInt();
+                                     if(opcion==1)j.centrodemando.Especialista.setEstadoAtacando(3);
+                                     }
+                                    
+                                    
+                                }else{
+                                    System.out.println("No se puede atacar el centro de mando, hace ser el ultimo Edificio");
+                                }
                                 break;
-                            
+                          //Stich
                             }
-                             
 
                         }
+
+
                         
                         else if(j==jugador2){
                             System.out.print("Usted Posee: " + j.centrodemando.AdminMilitia.getLista().size() + " Escuadrones Disponibles/Vivos \n");
                         if(j.centrodemando.Especialista != null) System.out.print(" Y 1 Especialista\n");
                         
                         System.out.println("1) Atacar Edificacion de Recursos Enemiga ");
-                        System.out.println("2) Atacar Vehiculos Enemigos");
-                        System.out.println("3) Atacar Centro de Mando");
+                        System.out.println("2) Atacar Centro de Mando");
                         opcion = sc2.nextInt();
                         
                         switch(opcion){
@@ -498,10 +538,56 @@ public class Menu {
                                 }
                                 
                                 break;
-                            
+                                //atacar centro de mando
+                            case 2:
+                                //Si enemigo no tiene edif recursos y no tiene vehiculos
+                                if((jugador1.centrodemando.AdminRecursos.getLista().isEmpty())&&(jugador1.centrodemando.AdminVehiculos.getLista().isEmpty())){
+                                    int x=0;
+                                    ArrayList<Militia> arm =j.centrodemando.AdminMilitia.getLista();
+                                    for(Militia m : arm){
+                                        if (m.getEstadoAtacando() == 0) x++;
+                                    }
+                                    System.out.println("Escuadrones Disponible Para Atacar: " + x);
+                                    System.out.print("Especialista Disponible: ");
+                                     if((j.centrodemando.Especialista != null)&&(j.centrodemando.Especialista.getEstadoAtacando()==0)) System.out.println(" 1"); else System.out.println("0");
+                                    
+                                     if((x==0)&&(j.centrodemando.Especialista == null)) {
+                                         System.err.println("No Posee Militia");
+                                         break;
+                                     }
+                                     
+                                     while(true){
+                                     System.out.println("Ingrese Cantidad de Escuadrones a Utilizar ");
+                                     opcion = sc2.nextInt();
+                                     if((opcion<=x)||(opcion>0))break;
+                                     System.err.println("Ingrese Cantidad Valida!");
+                                     }
+                                     
+                                     int aux=0;
+                                     for(Militia m : arm){
+                                         if (m.getEstadoAtacando() == 0) {
+                                             m.setEstadoAtacando(3);
+                                             aux++;
+                                         }
+                                         
+                                         if(aux>=opcion)break;
+                                     }
+                                     if(j.centrodemando.Especialista.getEstadoAtacando()==0){
+                                     System.out.println("Desea Utilizar El Especialista Para El Ataque? 1)Si 2)No");
+                                     opcion = sc2.nextInt();
+                                     if(opcion==1)j.centrodemando.Especialista.setEstadoAtacando(3);
+                                     }
+                                    
+                                    
+                                }else{
+                                    System.out.println("No se puede atacar el centro de mando, hace ser el ultimo Edificio");
+                                }
+                                break;
                             }
 
                         }
+                        
+                        
                     } catch(Exception e){
                         
                     }

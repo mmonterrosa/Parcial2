@@ -40,6 +40,16 @@ public class EdifHummer implements EdifVehiculos{
     public String getNombre() {
     return this.nombre;
     }
+    
+     @Override
+    public int getVida() {
+     return this.vida;
+    }
+
+    @Override
+    public void setVida(int x) {
+    this.vida=x;
+    }
         
         
 }
