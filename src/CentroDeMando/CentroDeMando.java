@@ -26,13 +26,13 @@ public class CentroDeMando {
     private int nivel = 0;
     private int vida = 500;
     
-    private int oroMax=10000;
+    private int oroMax=3000;
     private int plataMax=5000;
-    private int cobreMax=3000;
+    private int cobreMax=10000;
     
-    private int cantOroActual=50000;
-    private int cantPlataActual=100000;
-    private int cantCobreActual=200000;
+    private int cantOroActual=250;
+    private int cantPlataActual=500;
+    private int cantCobreActual=1000;
     
     public Administrador AdminRecursos;
     public Administrador AdminVehiculos;
@@ -95,7 +95,7 @@ public class CentroDeMando {
                 }
             }
         }
-        if (aux!=0)System.out.println("Se Construyo:" +aux+ "Vehiculos Y Ahora Estan Activo!");
+        if (aux!=0)System.out.println("Se Construyeron: " +aux+ " Vehiculos Y Ahora Estan Activo!");
                 
         
          aux=0;
@@ -238,7 +238,7 @@ public class CentroDeMando {
                
            }
        }
-       public void AtacarCentroDeMando(Jugador enemigo){
+       public void AtacarCentroDeMando(Jugador enemigo, Jugador x){
            try{
                //Si la lista de recursos contiene un edif recursos nuevo
                if(!(enemigo.centrodemando.AdminRecursos.getLista().isEmpty())){
@@ -267,7 +267,8 @@ public class CentroDeMando {
                    if(m.getEstadoAtacando()==3)enemigo.centrodemando.vida -= m.Atacar(); 
                }
                if(enemigo.centrodemando.vida<=0){
-                   System.out.println(enemigo.nombre + "Ha Perdido");
+                   System.err.println(enemigo.nombre + "Ha Perdido El Juego");
+                   System.out.println(x.nombre + "Ha Ganado El Juego");
                    System.exit(0);
                }
            }
@@ -301,19 +302,31 @@ public class CentroDeMando {
     public void Recolectar( ){
         ArrayList<EdifRecursos> auxrecolect = new ArrayList();
         try{
-                this.AdminRecursos.showAll();
         auxrecolect = AdminRecursos.getLista();
         
         if(!auxrecolect.isEmpty()){
          for (EdifRecursos er : auxrecolect){
             if (er.getNombre()=="Edificacion de Cobre"){
+                if(this.cantCobreActual+er.recolectar()>this.cobreMax){
+                    this.cantCobreActual=this.cobreMax;
+                }else{
                 this.cantCobreActual += er.recolectar();
+                }
             }
             if (er.getNombre()=="Edificacion de Plata"){
+                if(this.cantPlataActual+er.recolectar()>this.plataMax){
+                    this.cantPlataActual=this.plataMax;
+                }else{
                 this.cantPlataActual += er.recolectar();
+                }
+
             }
             if (er.getNombre()=="Edificacion de Oro"){
+                 if(this.cantOroActual+er.recolectar()>this.oroMax){
+                    this.cantOroActual=this.oroMax;
+                }else{
                 this.cantOroActual += er.recolectar();
+                }
             }
 
             }

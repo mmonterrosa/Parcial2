@@ -12,7 +12,7 @@ import parcial2.Menu;
  * @author MMont
  */
 public class EdifOro implements EdifRecursos{
-        public int lootPorFase=50;
+        public int lootPorFase=200;
         public int vida = 500;
         public String nombre = "Edificacion de Oro";
         public int fasesEspera;
